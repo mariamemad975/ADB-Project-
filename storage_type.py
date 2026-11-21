@@ -12,6 +12,19 @@ class RowStore:
         self.count = 0
         self.row_size = self.template.size
 
+        max_rows = (page_size - 2) // self.row_size
+
+        page_id = 0
+        while True:
+            page = self.bufferpoolm.fetch_page(page_id)
+            (c,) = HEADER.unpack_from(page, 0)
+            if c == 0 or  c > max_rows: 
+                self.bufferpoolm.unpin_page(page_id)
+                break 
+            self.count += c
+            self.bufferpoolm.unpin_page(page_id)
+            page_id += 1
+
     def insert(self, row_data):
         rows_in_page = (page_size - 2) // self.row_size
         page_id, slot = divmod(self.count, rows_in_page)
@@ -58,6 +71,24 @@ class ColumnStore:
         self.cols = column_def
         self.start_offset = startpage_offset
         self.count = 0
+
+        if self.cols:
+            first_template = next(iter(self.cols.values()))
+            max_rows = (page_size - 2) // first_template.size
+
+            i = 0
+            start_page = self.start_offset + (i * 1000)
+            
+            page_id = start_page
+            while True:
+                page = self.bufferpoolm.fetch_page(page_id)
+                (c,) = HEADER.unpack_from(page, 0)
+                if c == 0 or c > max_rows:
+                    self.bufferpoolm.unpin_page(page_id)
+                    break
+                self.count += c
+                self.bufferpoolm.unpin_page(page_id)
+                page_id += 1
 
     def insert(self, row_data):
         for i, (col_name, template) in enumerate(self.cols.items()):
