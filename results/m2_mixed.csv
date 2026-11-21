@@ -1,0 +1,5 @@
+workload,index,ops_per_s,std
+read-heavy 95/5,btree,23613,572
+read-heavy 95/5,lsm,6589,24
+write-heavy 5/95,btree,13868,35
+write-heavy 5/95,lsm,49500,172

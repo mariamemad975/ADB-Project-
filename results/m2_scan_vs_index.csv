@@ -1,0 +1,5 @@
+query,access_path,ms_per_query,std
+point lookup,full scan,45.955,0.226
+point lookup,B+ Tree index,0.073,0.0
+range 1% of table,full scan,47.24,0.305
+range 1% of table,B+ Tree index,1.149,0.009

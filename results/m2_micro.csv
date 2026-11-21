@@ -1,0 +1,3 @@
+index,n,insert_s,insert_s_std,flush_s,flush_s_std,lookup_p50_us,lookup_p50_us_std,lookup_p95_us,lookup_p95_us_std,range100_ms,range100_ms_std,size_kb,size_kb_std,ins_ops,ins_ops_std
+btree,20000,1.222,0.007,0.001,0.0,53.067,0.447,62.426,5.889,0.079,0.0,644.0,0.0,16370.515,88.161
+lsm,20000,0.168,0.002,0.056,0.0,192.116,0.847,204.944,1.848,0.3,0.002,336.0,0.0,118710.855,1485.555
