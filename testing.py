@@ -69,6 +69,18 @@ def run_benchmarks():
 
     print(f"Row scan time: {row_time}s")
     print(f"Col scan time: {col_time}s")
+
+
+    start = time.time()
+    list(rs.get_row(0))
+    lookup_row_time = time.time() - start
+
+    start = time.time()
+    list(rs.scan())
+    row_time = time.time() - start
+
+    print(f"\nRow lookup time: {lookup_row_time}s")
+    print(f"Row scan time: {row_time}s")
     
     dm.close()
     os.remove(file)
